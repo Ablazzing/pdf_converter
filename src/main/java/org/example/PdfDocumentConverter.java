@@ -6,9 +6,11 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import lombok.SneakyThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class PdfDocumentConverter {
     private static final float FONT_SIZE = 16;
@@ -18,34 +20,32 @@ public class PdfDocumentConverter {
     public byte[] createPdfArray(String text) {
         try {
             ByteArrayOutputStream data = new ByteArrayOutputStream();
-
-            Document document = new Document();
-            PdfWriter.getInstance(document, data);
-            document.open();
-            Paragraph paragraph = new Paragraph(text, getFont());
-            document.add(paragraph);
-            document.close();
+            fillPdfDocument(data, text);
             return data.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Font getFont() {
-        return FontFactory.getFont(FONT_TYPE, FONT_SIZE, FONT_COLOR);
-    }
-
     public void saveTextToPdfFile(String fileResult, String text) {
         try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(fileResult));
-
-            document.open();
-            Paragraph paragraph = new Paragraph(text, getFont());
-            document.add(paragraph);
-            document.close();
+            fillPdfDocument(new FileOutputStream(fileResult), text);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @SneakyThrows
+    private void fillPdfDocument(OutputStream outputStream, String text) {
+        Document document = new Document();
+        PdfWriter.getInstance(document, outputStream);
+        document.open();
+        Paragraph paragraph = new Paragraph(text, getFont());
+        document.add(paragraph);
+        document.close();
+    }
+
+    private Font getFont() {
+        return FontFactory.getFont(FONT_TYPE, FONT_SIZE, FONT_COLOR);
     }
 }
