@@ -16,6 +16,7 @@ import java.io.File;
 public class PdfImageWriter {
     private static final int FIRST_PAGE = 0;
     private static final String JPEG_FORMAT = "jpeg";
+    private static final int IMAGE_QUALITY_DPI = 300;
 
     public void savePdfPageToImageFile(String fileSource, String fileOutput) {
         savePdfPageToImageFile(fileSource, fileOutput, JPEG_FORMAT);
@@ -66,7 +67,7 @@ public class PdfImageWriter {
         try {
             PDDocument doc = Loader.loadPDF(data);
             PDFRenderer pdfRenderer = new PDFRenderer(doc);
-            return pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.RGB);
+            return pdfRenderer.renderImageWithDPI(pageIndex, IMAGE_QUALITY_DPI, ImageType.RGB);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -76,7 +77,7 @@ public class PdfImageWriter {
         try {
             PDDocument doc = Loader.loadPDF(new File(pdfFileSource));
             PDFRenderer pdfRenderer = new PDFRenderer(doc);
-            return pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.RGB);
+            return pdfRenderer.renderImageWithDPI(pageIndex, IMAGE_QUALITY_DPI, ImageType.RGB);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
