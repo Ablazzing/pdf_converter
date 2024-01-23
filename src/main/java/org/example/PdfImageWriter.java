@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 /**
- * Сохраняет страницу из pdf в image
+ * Записывает страницу из pdf в image
  */
 public class PdfImageWriter {
     private static final int FIRST_PAGE = 0;
