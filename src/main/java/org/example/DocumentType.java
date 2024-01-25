@@ -2,9 +2,10 @@ package org.example;
 
 public enum DocumentType {
     TXT,
-    DOC,
+    DOCX,
     RTF,
-    XLSX;
+    XLSX,
+    PDF;
 
     public static DocumentType getType(String filename) {
         for (DocumentType value : DocumentType.values()) {
